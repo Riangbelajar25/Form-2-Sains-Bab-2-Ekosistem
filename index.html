@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="zh-Hans"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>生态伙伴 · 国文配对</title><style>
+:root{font-family:Nunito,'Noto Sans SC',system-ui,sans-serif;color:#173c40;background:#f3f8f9;font-size:18px}*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer;border:0;border-radius:16px;padding:16px 22px;min-height:55px}button:focus-visible,input:focus-visible{outline:3px solid #128189;outline-offset:4px}button:disabled{cursor:default}.shell{max-width:1050px;margin:auto;padding:26px 24px 50px}header{display:flex;justify-content:space-between;align-items:center;gap:15px;padding-bottom:25px}.brand{font-size:21px;font-weight:850}.brand span{display:inline-flex;background:#d5ece9;border-radius:14px;width:44px;height:44px;align-items:center;justify-content:center;margin-right:9px}small{font-size:14px;color:#5e777b}.home-title{font-size:clamp(36px,6vw,62px);line-height:1.13;margin:28px 0 15px;letter-spacing:-2px}.intro{color:#536f73;line-height:1.7;max-width:590px}.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:36px;align-items:center}.art{background:#dcefed;border-radius:42% 48% 38% 44%;text-align:center;padding:40px 25px;font-size:90px;line-height:1.5}.art p{font-size:20px;letter-spacing:0;margin:0;font-weight:700}.primary{background:#126e72;color:white;font-weight:750}.secondary{background:#e3eff0;color:#1d5358}.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.name{display:block;font-size:16px;margin:25px 0 8px}input{padding:15px;border:1px solid #b3cacc;border-radius:13px;max-width:300px;width:100%;background:white;color:#173c40}.topics{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:35px 0}.topic{background:white;border:1px solid #dce7e7;border-radius:20px;padding:22px}.topic strong{display:block;margin:9px 0}.topic p{font-size:16px;line-height:1.6;color:#5e777b;margin:0}.note{font-size:14px;color:#5e777b;margin-top:18px;line-height:1.7}.card{background:white;border:1px solid #dce7e7;border-radius:24px;padding:30px;max-width:750px;margin:24px auto}.progress{height:8px;border-radius:10px;background:#dce8e9;overflow:hidden;margin:20px auto;max-width:750px}.progress div{height:100%;background:#218a86}.question{text-align:center;margin:15px 0 25px}.question .symbol{font-size:55px}.question h1{font-size:clamp(28px,5vw,38px);margin:14px 0;overflow-wrap:anywhere}.question p{color:#617b80}.answers{display:grid;grid-template-columns:1fr 1fr;gap:13px}.option{border:2px solid #dce8e9;background:white;text-align:left;font-weight:650}.option:hover:enabled{border-color:#126e72;background:#f2f9f8}.option.correct{background:#e3f5ea;border-color:#318554}.option.wrong{background:#fff0ec;border-color:#ba5b48}.feedback{padding:18px;background:#edf5f5;border-radius:15px;line-height:1.7;margin-top:20px}.next{width:100%;margin-top:16px}.study{display:grid;gap:15px}.study-item{padding:20px;border-radius:16px;background:#f0f7f7}.study-item strong{font-size:21px}.study-item p{margin-bottom:0;line-height:1.7}.result{text-align:center}.score{font-size:64px;font-weight:850;color:#126e72}.mistake{text-align:left;padding:16px 0;border-top:1px solid #dfebeb;line-height:1.7}h2{font-size:24px}footer{text-align:center;font-size:14px;color:#70878a;margin-top:30px}@media(max-width:640px){.shell{padding:18px 16px 35px}.hero{grid-template-columns:1fr;gap:15px}.art{font-size:55px;padding:20px;order:-1}.home-title{margin-top:10px;letter-spacing:-1px}.topics{grid-template-columns:1fr}.card{padding:22px 17px}.answers{grid-template-columns:1fr}.option{padding:16px}header{padding-bottom:10px}.brand{font-size:18px}}
+textarea{display:block;width:100%;font:inherit;color:#173c40;border:1px solid #9ebfc0;border-radius:14px;padding:15px;margin:14px 0 18px;line-height:1.7;resize:vertical}textarea:focus-visible{outline:3px solid #128189;outline-offset:3px}.card label{display:block;line-height:1.7;margin-top:22px}</style></head><body><div class="shell"><header><div class="brand"><span>🌿</span>生态伙伴</div><small>Form 2 · Bab 2</small></header><main id="app"></main><footer>Interaksi antara organisma · 生物之间的关系</footer></div><script>
+'use strict';
+const words=[
+['Simbiosis','共生','包括互利共生、片利共生和寄生。','🌱'],
+['Komensalisme','片利共生','一方获益，另一方不受影响。例如鸟巢蕨依附树木。','🌳'],
+['Mutualisme','互利共生','双方都获益。例如蜜蜂获得花蜜，同时帮助花传粉。','🐝'],
+['Parasitisme','寄生','寄生生物获益，宿主受害。例如跳蚤吸食猴子的血液。','🐒'],
+['Persaingan','竞争','生物争夺有限的基本资源，例如食物、水和阳光。','🌱'],
+['Saprofitisme','腐生','从死亡或腐烂的有机物中获取养分。例如真菌分解枯木。','🍄'],
+['mendapat faedah','获益','得到好处。Mutualisme 中的双方都 mendapat faedah。','✨'],
+['perumah','宿主','寄生生物生活在宿主体内或体表，并从中获取资源。','🌿'],
+['parasit','寄生生物','从宿主获取资源，并使宿主受到损害的生物。','🔍'],
+['mengalami kerugian','受到损害','Parasitisme 中，宿主 mengalami kerugian。','🍂'],
+['kedua-dua','双方','Kedua-dua organisma mendapat faedah 表示两种生物都获益。','🤝'],
+['bersaing','竞争','指争夺资源的动作。生物可能争夺同一种食物。','🌿'],
+['sumber asas','基本资源','例如食物、水、空间和阳光。','💧'],
+['terhad','有限的','资源数量有限，可能无法满足所有生物的需求。','💧'],
+['bahan organik','有机物','这里指枯叶、死亡生物等可被分解的物质。','🍂'],
+['mati','死亡','已没有生命。死亡生物可被分解者分解。','🍂'],
+['mereput','腐烂','有机物逐渐被分解。','🍄'],
+['tidak dibahayakan','不受伤害','Komensalisme 中，另一方不受伤害。','🌳']
+];
+const scenarios=[
+['蜜蜂获得花蜜，也帮助花传粉。','Mutualisme','双方获益，所以属于互利共生。','🐝'],
+['鸟巢蕨依附树木获得较好的光照，树不受影响。','Komensalisme','鸟巢蕨获益，树不受影响。','🌳'],
+['跳蚤吸食猴子的血液，猴子受害。','Parasitisme','跳蚤获益，猴子受害。','🐒'],
+['幼苗在同一处争夺有限的阳光。','Persaingan','植物争夺有限的资源。','🌱'],
+['真菌从腐烂的枯木中获取养分。','Saprofitisme','利用死亡或腐烂的有机物获取养分。','🍄']
+];
+const app=document.getElementById('app');let deck=[],index=0,score=0,wrong=[],answered=false,student='',mode='words',history=[];
+try{history=JSON.parse(localStorage.getItem('eco-match-history')||'[]');if(!Array.isArray(history))history=[]}catch{}
+function el(tag,text,cls){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n}
+function button(text,cls,fn){const n=el('button',text,cls);n.type='button';n.onclick=fn;return n}
+function shuffle(items){const out=[...items];for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]]}return out}
+function home(){app.innerHTML='<section class="hero"><div><h1 class="home-title">认一个词，<br>懂一种关系。</h1><p class="intro">先认识国文重点字，再用生活例子分辨生物关系。每轮 10 题，点选答案就能查看华文解释。</p><label class="name" for="student">你的名字（可留空）</label><input id="student" autocomplete="given-name" maxlength="40" placeholder="输入名字"><div class="row" style="margin-top:18px" id="start"></div></div><div class="art" aria-hidden="true">🌳 🐝<br>🍄 🌱<p>一起认识生态伙伴</p></div></section><section class="topics"><article class="topic">📖<strong>国文认字</strong><p>先看国文，选择对应的华文意思。</p></article><article class="topic">🌿<strong>情境挑战</strong><p>看看谁获益、谁受害，再选择关系。</p></article><article class="topic">🔁<strong>错题重练</strong><p>做错的重点字，再练一次。</p></article></section><div id="studyButton" class="row"></div><p class="note" id="history"></p>';
+app.querySelector('#student').value=student;
+const start=app.querySelector('#start');start.append(button('开始认字','primary',()=>begin('words')),button('情境挑战','secondary',()=>begin('scenes')));
+app.querySelector('#studyButton').append(button('全部游戏重点','primary',showKeyPoints),button('自己解释全部重点','primary',()=>explain(0)),button('先看生字卡','secondary',study));
+const last=history.at(-1);app.querySelector('#history').textContent=last?`本机已完成 ${history.length} 轮 · 最近一次 ${last.name}，${last.score}/${last.total} 分。记录仅保存在此浏览器。`:'学习记录会保存在此浏览器。';}
+function makeDeck(type){const source=type==='words'?words.map((w,i)=>({id:'word'+i,prompt:w[0],answer:w[1],explain:w[2],icon:w[3],hint:'选出对应的华文意思',pool:words.map(w=>w[1])})):scenarios.flatMap((s,i)=>[{id:'scene'+i,prompt:s[0],answer:s[1],explain:s[2],icon:s[3],hint:'这是什么生物关系？',pool:scenarios.map(s=>s[1])},{id:'sign'+i,prompt:s[1],answer:['双方获益','一方获益，另一方不受影响','一方获益，另一方受害','争夺有限资源','从死亡有机物获取养分'][i],explain:s[2],icon:s[3],hint:'选出这类关系的意思',pool:['双方获益','一方获益，另一方不受影响','一方获益，另一方受害','争夺有限资源','从死亡有机物获取养分']}]);return shuffle(source).slice(0,10)}
+function begin(type){const field=document.getElementById('student');if(field)student=field.value.trim();mode=type;deck=makeDeck(type);resetRound()}
+function resetRound(){index=0;score=0;wrong=[];showQuestion()}
+function nav(){const row=el('div',undefined,'row');row.append(button('返回首页','secondary',home));app.append(row)}
+function showQuestion(){answered=false;app.replaceChildren();nav();const top=el('div',undefined,'row');top.style.cssText='max-width:750px;margin:24px auto 0;justify-content:space-between';top.append(el('strong',`第 ${index+1} / ${deck.length} 题`),el('span',`得分 ${score}`));app.append(top);const progress=el('div',undefined,'progress'),bar=el('div');bar.style.width=(index/deck.length*100)+'%';progress.append(bar);app.append(progress);const card=el('section',undefined,'card'),q=deck[index],question=el('div',undefined,'question');question.append(el('div',q.icon,'symbol'),el('p',q.hint),el('h1',q.prompt));card.append(question);const answers=el('div',undefined,'answers');const others=shuffle([...new Set(q.pool)].filter(a=>a!==q.answer)).slice(0,3);shuffle([q.answer,...others]).forEach(a=>answers.append(button(a,'option',()=>choose(a,card,answers))));card.append(answers);app.append(card);window.scrollTo(0,0)}
+function choose(answer,card,answers){if(answered)return;answered=true;const q=deck[index],correct=answer===q.answer;if(correct)score++;else wrong.push({...q,chosen:answer});for(const btn of answers.children){btn.disabled=true;if(btn.textContent===q.answer)btn.classList.add('correct');else if(btn.textContent===answer)btn.classList.add('wrong')}const fb=el('div',undefined,'feedback');fb.setAttribute('role','status');fb.append(el('strong',correct?'✓ 答对了！':`再记一次 · 正确答案是 ${q.answer}`),el('div',q.explain));card.append(fb);const next=button(index===deck.length-1?'查看成绩':'下一题','primary next',()=>{index++;if(index===deck.length)finish();else showQuestion()});card.append(next);next.focus()}
+function finish(){const record={name:student||'同学',score,total:deck.length,date:new Date().toLocaleString('zh-CN'),mode};history.push(record);history=history.slice(-100);let stored=true;try{localStorage.setItem('eco-match-history',JSON.stringify(history))}catch{stored=false}app.replaceChildren();nav();const card=el('section',undefined,'card result');card.append(el('h1',`${record.name}，这轮完成了！`),el('div',`${score} / ${deck.length}`,'score'),el('p',wrong.length?'看看这些重点字，再练一次。':'全部答对！可以挑战另一种模式。'));const actions=el('div',undefined,'row');actions.style.justifyContent='center';if(wrong.length){const retry=wrong.map(({chosen,...q})=>q);actions.append(button('重练错题','primary',()=>{deck=shuffle(retry);resetRound()}))}actions.append(button('自己解释','primary',()=>explain(0)));actions.append(button('再玩一轮','secondary',()=>begin(mode)),button('生字卡','secondary',study));card.append(actions);for(const q of wrong){const item=el('div',undefined,'mistake');item.append(el('strong',q.prompt),el('div',`你的答案 ${q.chosen}`),el('div',`正确答案 ${q.answer}`),el('div',q.explain));card.append(item)}card.append(el('p',stored?'已记录在此浏览器。':'浏览器无法保存记录，本轮成绩仍可查看。','note'));app.append(card);window.scrollTo(0,0)}
+function study(){const field=document.getElementById('student');if(field)student=field.value.trim();app.replaceChildren();nav();const card=el('section',undefined,'card');card.append(el('h1','先认识重点字'),el('p','读国文，再看华文和例子。'));const list=el('div',undefined,'study');for(const w of words){const item=el('article',undefined,'study-item');item.append(el('strong',`${w[3]} ${w[0]}`),el('div',w[1]),el('p',w[2]));list.append(item)}card.append(list,button('自己解释全部重点','secondary next',()=>explain(0)),button('开始认字','primary next',()=>begin('words')));app.append(card);window.scrollTo(0,0)}
+
+const relationshipTasks = [
+  {
+    "term": "Simbiosis",
+    "chinese": "共生",
+    "sample": "两种不同物种的生物密切生活在一起，包括互利共生、共栖和寄生。",
+    "simple": "两种生物密切生活在一起。",
+    "malay": "Hubungan rapat antara dua organisma yang berlainan spesies. Simbiosis merangkumi mutualisme, komensalisme dan parasitisme.",
+    "example": "蜜蜂和花互相帮助，是互利共生，也是共生的一种。",
+    "exampleMalay": "Lebah dan bunga menunjukkan mutualisme, iaitu sejenis simbiosis.",
+    "prompt": "蜜蜂和花的关系属于________，也是________的一种。",
+    "sampleExample": "蜜蜂和花属于互利共生，也是共生的一种。",
+    "keywords": "hubungan rapat · berlainan spesies"
+  },
+  {
+    "term": "Komensalisme",
+    "chinese": "共栖（片利共生）",
+    "sample": "一种生物得到好处，另一种生物没有得到好处，也没有受到伤害。",
+    "simple": "我得到好处，你不受影响。",
+    "malay": "Satu organisma mendapat faedah, manakala organisma yang satu lagi tidak mendapat faedah dan tidak mengalami kemudaratan.",
+    "example": "鸟巢蕨依附树木，更容易得到阳光。鸟巢蕨获益，树不受影响。",
+    "exampleMalay": "Paku-pakis langsuir menumpang pada pokok untuk mendapat cahaya matahari. Pokok tidak mengalami kemudaratan.",
+    "prompt": "鸟巢蕨得到________，树________。",
+    "sampleExample": "鸟巢蕨得到较好的光照，树不受影响。",
+    "keywords": "mendapat faedah · tidak mengalami kemudaratan"
+  },
+  {
+    "term": "Mutualisme",
+    "chinese": "互利共生",
+    "sample": "两种生物都从这段关系中得到好处。",
+    "simple": "我有好处，你也有好处。",
+    "malay": "Kedua-dua organisma mendapat faedah.",
+    "example": "蜜蜂从花获得花蜜，花获得蜜蜂帮助传粉。",
+    "exampleMalay": "Lebah mendapat nektar daripada bunga dan membantu pendebungaan bunga.",
+    "prompt": "蜜蜂获得________，花得到________的帮助。",
+    "sampleExample": "蜜蜂获得花蜜，花得到传粉的帮助。",
+    "keywords": "kedua-dua · mendapat faedah"
+  },
+  {
+    "term": "Parasitisme",
+    "chinese": "寄生",
+    "sample": "寄生生物从宿主获取资源，寄生生物获益，宿主受到伤害。",
+    "simple": "我得到好处，你受到伤害。",
+    "malay": "Parasit mendapat faedah, manakala perumah mengalami kemudaratan.",
+    "example": "跳蚤吸食猴子的血液获得食物，猴子受到伤害。",
+    "exampleMalay": "Kutu menghisap darah monyet. Kutu mendapat makanan, manakala monyet mengalami kemudaratan.",
+    "prompt": "跳蚤得到________，猴子________。",
+    "sampleExample": "跳蚤得到食物，猴子受到伤害。",
+    "keywords": "parasit · perumah · kemudaratan"
+  },
+  {
+    "term": "Persaingan",
+    "chinese": "竞争",
+    "sample": "生物争夺有限的基本资源，例如食物、水、空间或阳光。",
+    "simple": "资源不够，大家争取。",
+    "malay": "Organisma bersaing untuk mendapatkan sumber asas yang terhad.",
+    "example": "同一地方的幼苗争夺有限的阳光、水和空间。",
+    "exampleMalay": "Anak-anak pokok bersaing untuk mendapatkan cahaya matahari, air dan ruang yang terhad.",
+    "prompt": "幼苗争夺________，因为这些资源________。",
+    "sampleExample": "幼苗争夺阳光、水和空间，因为这些资源有限。",
+    "keywords": "bersaing · sumber asas · terhad"
+  },
+  {
+    "term": "Saprofitisme",
+    "chinese": "腐生",
+    "sample": "生物从死亡或腐烂的有机物中获取养分。",
+    "simple": "从死亡或腐烂的有机物获取养分。",
+    "malay": "Organisma memperoleh nutrien daripada bahan organik yang mati atau mereput.",
+    "example": "真菌分解枯木，从中获取养分。",
+    "exampleMalay": "Kulat menguraikan kayu mati untuk memperoleh nutrien.",
+    "prompt": "真菌从________中获取________。",
+    "sampleExample": "真菌从枯木中获取养分。",
+    "keywords": "bahan organik · mati · mereput"
+  }
+];
+const vocabularyTasks = words.slice(6).map(word => ({
+  term: word[0], chinese: word[1], sample: word[2], simple: word[1],
+  malay: '', example: word[2], exampleMalay: '',
+  prompt: '试着用这个词说明一个生物关系或例子。',
+  sampleExample: word[2], keywords: word[0]
+}));
+const explanationTasks = [...relationshipTasks, ...vocabularyTasks];
+const explanationDrafts = explanationTasks.map(() => ({meaning:'', example:''}));
+function showKeyPoints() {
+  const nameField = document.getElementById('student');
+  if (nameField) student = nameField.value.trim();
+  app.replaceChildren();
+  nav();
+  const card = el('section', undefined, 'card');
+  card.append(el('h1', '全部游戏重点'), el('p', '六个关系重点，配上国文关键词、解释和例子。'));
+  for (let i = 0; i < relationshipTasks.length; i++) {
+    const task = relationshipTasks[i];
+    const item = el('article', undefined, 'study-item');
+    item.style.marginBottom = '18px';
+    item.append(el('h2', task.term + ' ' + task.chinese), el('p', task.simple),
+      el('p', task.sample), el('p', task.malay), el('p', task.example),
+      el('p', '国文关键词 · ' + task.keywords),
+      button('我来解释这个关系', 'secondary', () => explain(i)));
+    card.append(item);
+  }
+  card.append(el('h2', '重点生字'));
+  for (let i = 0; i < vocabularyTasks.length; i++) {
+    const task = vocabularyTasks[i];
+    const item = el('div', undefined, 'study-item');
+    item.style.marginBottom = '12px';
+    item.append(el('p', task.term + ' ＝ ' + task.chinese), button('我来解释这个词', 'secondary', () => explain(i + relationshipTasks.length)));
+    card.append(item);
+  }
+  card.append(button('开始认字配对', 'primary next', () => begin('words')));
+  app.append(card);
+  window.scrollTo(0, 0);
+}
+function explain(taskIndex) {
+  const nameField = document.getElementById('student');
+  if (nameField) student = nameField.value.trim();
+  app.replaceChildren();
+  nav();
+  const task = explanationTasks[taskIndex];
+  const draft = explanationDrafts[taskIndex];
+  const card = el('section', undefined, 'card');
+  card.append(button('选择其他重点','secondary',showKeyPoints));
+  card.append(el('p', `自己解释 · ${taskIndex + 1} / ${explanationTasks.length}`), el('h1', `${task.term} ${task.chinese}`));
+  const label = el('label', taskIndex < relationshipTasks.length ? '先用自己的话解释这个关系。可以写华文或国文。' : '先解释这个国文词的意思。可以写华文或国文。');
+  label.htmlFor = 'ownMeaning';
+  const input = el('textarea');
+  input.id = 'ownMeaning';
+  input.rows = 4;
+  input.maxLength = 1500;
+  input.placeholder = taskIndex < 6 ? '用一句话说出它的意思。' : '这个国文字是什么意思？';
+  input.value = draft.meaning;
+  input.oninput = () => { draft.meaning = input.value; };
+  const message = el('p');
+  message.setAttribute('role', 'status');
+  const reveal = button('写好了，看参考解释和例子', 'primary next', () => {
+    if (!input.value.trim()) {
+      message.textContent = '先试着写一句，再看参考解释。';
+      input.focus();
+      return;
+    }
+    reveal.disabled = true;
+    message.textContent = '对照参考解释，看看有没有说出重点。';
+    const reference = el('div', undefined, 'feedback');
+    reference.append(el('h2', '参考解释'), el('p', '国文关键词 · ' + task.keywords), el('p', task.simple), el('p', task.sample), el('p', task.malay),
+      el('h2', '例子'), el('p', task.example), el('p', task.exampleMalay));
+    card.append(reference);
+    const practiceLabel = el('label', '现在用自己的话说明这个例子。');
+    practiceLabel.htmlFor = 'ownExample';
+    const exampleInput = el('textarea');
+    exampleInput.id = 'ownExample';
+    exampleInput.rows = 3;
+    exampleInput.maxLength = 1500;
+    exampleInput.placeholder = task.prompt;
+    exampleInput.value = draft.example;
+    exampleInput.oninput = () => { draft.example = exampleInput.value; };
+    const exampleStatus = el('p');
+    exampleStatus.setAttribute('role', 'status');
+    const compare = button('写好了，对照例句', 'secondary next', () => {
+      if (!exampleInput.value.trim()) {
+        exampleStatus.textContent = '试着用一句话解释这个例子。';
+        exampleInput.focus();
+        return;
+      }
+      exampleStatus.textContent = task.sampleExample;
+      compare.disabled = true;
+      card.append(button(taskIndex < explanationTasks.length - 1 ? '下一个重点' : '完成，返回首页', 'primary next', () => taskIndex < explanationTasks.length - 1 ? explain(taskIndex + 1) : home()));
+    });
+    card.append(practiceLabel, exampleInput, compare, exampleStatus);
+  });
+  card.append(label, input, message, reveal, el('p', '自己的解释由你或老师对照参考答案检查。', 'note'));
+  app.append(card);
+  window.scrollTo(0, 0);
+  input.focus();
+}
+
+home();
+</script></body></html>
